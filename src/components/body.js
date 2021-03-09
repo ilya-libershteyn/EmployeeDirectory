@@ -1,11 +1,21 @@
-function Body ({users}) {
+import React from 'react';
+
+function Body ({users, search}) {
+    console.log(users);
     return (
-        <div className="card">
-            <div className="card-body">
-                <h5 className="card-title">Special title treatment</h5>
-                {users.map(user => <p className="card-text">{user.name.first} {user.name.last}</p>)}
-                <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            </div>
+        <div className="card">            
+                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 m-0">
+                    {
+                        users.map(user => 
+                        <div className="card-body">
+                            <p className="card-text">{user.name.first} {user.name.last} {user.email} {user.phone}</p>
+                        </div>)
+                        .filter(user => (
+                            user.name.first.includes(search)).map(filteredName => (
+                            <p className="card-text">{filteredName.first} {filteredName.last} {filteredName.email} {filteredName.phone}</p>)
+                        ))
+                    }
+                </div>       
         </div>
     );
 }
