@@ -12,8 +12,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.searchUsers(50);
-    
+      this.searchUsers(50);
   }
 
   searchUsers = query => {
@@ -22,8 +21,7 @@ class App extends React.Component {
         users: res.data.results,
         cache: res.data.results
       }))
-      .catch(err => console.log(err));
-    
+      .catch(err => console.log(err));  
   }
 
   handleInputChange = event => {
@@ -55,6 +53,33 @@ class App extends React.Component {
     })
   };
 
+  handleAlphaSort = event => {
+    event.preventDefault();
+
+    const sortedUsers = this.state.users.sort((a,b) => {
+      if(a.name.first < b.name.first)
+        return -1;
+      if(a.name.first > b.name.first)
+        return 1;
+
+      return 0;
+    });
+
+    console.log(sortedUsers);
+
+    this.setState({users: sortedUsers});
+  };
+
+  handleStartSort = event => {
+    event.preventDefault();
+
+    const sortedUsers = this.state.users.sort((a,b) => {
+      return new Date(a.registered.date).getTime() - new Date(b.registered.date).getTime();
+    });
+
+    this.setState({users: sortedUsers});
+  }
+
   render() {
     return(
       <div className="container">
@@ -63,7 +88,9 @@ class App extends React.Component {
           handleInputChange={this.handleInputChange} 
           value={this.state.search} 
           handleFormSubmit={this.handleFormSubmit}
-          handleClear={this.handleClear}        
+          handleClear={this.handleClear}  
+          handleAlphaSort={this.handleAlphaSort}
+          handleStartSort={this.handleStartSort}      
         />
         <Body users={this.state.users}/>
       </div>

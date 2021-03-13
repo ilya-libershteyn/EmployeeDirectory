@@ -7,7 +7,9 @@ function Body ({users}) {
                     {
                         users.map(user => 
                         <div className="card-body">
-                            <p className="card-text">{user.name.first} {user.name.last} {user.email} {user.phone}</p>
+                            <p className="card-text">
+                                {user.name.first} {user.name.last} {user.email} {user.phone} {user.registered.date}
+                            </p>
                         </div>)
                     }
                 </div>       

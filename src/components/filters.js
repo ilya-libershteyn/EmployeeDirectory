@@ -1,6 +1,6 @@
 import React from "react";
 
-function Filters({value, handleInputChange, handleFormSubmit, handleClear}) {
+function Filters({value, handleInputChange, handleFormSubmit, handleClear, handleStartSort, handleAlphaSort}) {
     //console.log(props);
     return(
         <form>
@@ -22,6 +22,14 @@ function Filters({value, handleInputChange, handleFormSubmit, handleClear}) {
                             </button>
                             <button onClick={handleClear} className="btn btn-primary">
                                 Clear
+                            </button>
+                        </div>
+                        <div className="form-group">
+                            <button onClick={handleStartSort} className="btn btn-primary">
+                                Sort By Start Date
+                            </button>
+                            <button onClick={handleAlphaSort} className="btn btn-primary">
+                                Sort Alphabetically
                             </button>
                         </div>
                     </form>
