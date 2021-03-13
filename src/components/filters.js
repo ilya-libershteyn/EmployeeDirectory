@@ -1,16 +1,34 @@
-function Filters({handleInputChange}) {
+import React from "react";
+
+function Filters({value, handleInputChange, handleFormSubmit, handleClear}) {
+    //console.log(props);
     return(
-        <div className="card">
-            <div className="card-body">
-                <form>
-                    <div className="form-group">
-                        <label hutmlFor="nameFilter">Filter by Name</label>
-                        <input type="text" className="form-control" name="search" id="nameFilter" onChange={handleInputChange}/>
-                    </div>
-                </form>
+        <form>
+            <div className="card">
+                <div className="card-body">
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="nameFilter">Filter by Name</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                name="search" 
+                                id="nameFilter" 
+                                onChange={handleInputChange}
+                                value={value}
+                            />
+                            <button onClick={handleFormSubmit} className="btn btn-primary">
+                                Search
+                            </button>
+                            <button onClick={handleClear} className="btn btn-primary">
+                                Clear
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
+        </form>
+    );
 }
 
 export default Filters;

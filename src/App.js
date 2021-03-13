@@ -8,10 +8,21 @@ class App extends React.Component {
   state = {
     users: [],
     search: "",
+    cache: []   // This will store the original list
   }
 
   componentDidMount() {
-    this.searchUsers(5);
+    this.searchUsers(50);
+    
+  }
+
+  searchUsers = query => {
+    API.getUsers(query)
+      .then(res => this.setState({
+        users: res.data.results,
+        cache: res.data.results
+      }))
+      .catch(err => console.log(err));
     
   }
 
@@ -25,19 +36,36 @@ class App extends React.Component {
     });
   };
 
-  searchUsers = query => {
-    API.getUsers(query)
-      .then(res => this.setState({users: res.data.results}))
-      .catch(err => console.log(err));
+  handleFormSubmit = event => {
+    event.preventDefault();
     
-  }
+    const list = this.state.users;
+    const search = this.state.search;
+    const searchList = list.filter( employee => employee.name.first === search) 
+      this.setState({
+          users: searchList
+        });
+  };
+
+  handleClear = event => {
+    event.preventDefault();
+
+    this.setState({
+      users: this.state.cache
+    })
+  };
 
   render() {
     return(
       <div className="container">
         <Header />
-        <Filters handleInputChange={this.handleInputChange}/>
-        <Body users={this.state.users} search={this.state.search}/>
+        <Filters 
+          handleInputChange={this.handleInputChange} 
+          value={this.state.search} 
+          handleFormSubmit={this.handleFormSubmit}
+          handleClear={this.handleClear}        
+        />
+        <Body users={this.state.users}/>
       </div>
     )
   };
